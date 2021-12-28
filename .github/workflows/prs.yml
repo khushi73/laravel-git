@@ -20,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+   
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '7.3'
@@ -46,6 +47,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+      with:
+        token: ${{ secrets.PUSH_TOKEN }}
     - name: Deploy to test
       uses: appleboy/ssh-action@master
       with:
@@ -60,7 +63,10 @@ jobs:
      needs: [laravel-tests]
      runs-on: ubuntu-latest
      steps:
+     
      - uses: actions/checkout@v1
+       with:
+        token: ${{ secrets.PUSH_TOKEN }}
      - name: Deploy to prod
        uses: appleboy/ssh-action@master
        with:
