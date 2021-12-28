@@ -17,10 +17,8 @@ on:
 jobs:
   laravel-tests:
 
-    runs-on: ubuntu-latest
-
-    steps:
-   
+    runs-on: ubuntu-latest    
+    steps:   
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '7.3'
@@ -46,9 +44,6 @@ jobs:
     needs: [laravel-tests]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-      with:
-        token: ${{ secrets.PUSH_TOKEN }}
     - name: Deploy to test
       uses: appleboy/ssh-action@master
       with:
@@ -62,11 +57,7 @@ jobs:
      if: github.ref == 'refs/heads/prod'
      needs: [laravel-tests]
      runs-on: ubuntu-latest
-     steps:
-     
-     - uses: actions/checkout@v1
-       with:
-        token: ${{ secrets.PUSH_TOKEN }}
+     steps:   
      - name: Deploy to prod
        uses: appleboy/ssh-action@master
        with:
