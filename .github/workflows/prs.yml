@@ -1,21 +1,30 @@
 name: Laravel
 
 on:
-   pull_request:
+
+  pull_request:
     branches:
-      - prod
-      - develop
-      - test
+       - prod
+       - develop
+       - test
+       
+  push:
+     branches:
+       - prod
+       - develop
+       - test
+       
+
 
 jobs:
   laravel-tests:
 
-    runs-on: ubuntu-latest
-
-    steps:
+    runs-on: ubuntu-latest    
+    steps:   
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
-        php-version: '7.3'
+        php-version: '7.4'
+
     - uses: actions/checkout@v2
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
@@ -38,26 +47,26 @@ jobs:
     needs: [laravel-tests]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
     - name: Deploy to test
       uses: appleboy/ssh-action@master
       with:
         username: root
         host: 68.183.88.222
         password: ${{ secrets.SSH_PASSWORD }}
-        script: 'cd /var/www/blog_test && server_deploy.sh'
-        
+        script: 'cd /var/www/blog_test && ./server_deploy.sh'
+
+       
   deploy_to_production:
     
      if: github.ref == 'refs/heads/prod'
      needs: [laravel-tests]
      runs-on: ubuntu-latest
-     steps:
-     - uses: actions/checkout@v1
+     steps:   
      - name: Deploy to prod
        uses: appleboy/ssh-action@master
        with:
         username: root
         host: 68.183.88.222
         password: ${{ secrets.SSH_PASSWORD }}
-        script: 'cd /var/www/blog_prod && server_deploy.sh'
+        script: 'cd /var/www/blog_prod && ./server_deploy.sh'
+
