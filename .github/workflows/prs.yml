@@ -2,18 +2,21 @@ name: Laravel
 
 on:
 
-  pull_request:
+
+
+
+   pull_request:
     branches:
-       - prod
-       - develop
-       - test
-       
-  push:
+      - prod
+      - develop
+      - test
+   push:
      branches:
        - prod
        - develop
        - test
        
+
 
 
 jobs:
