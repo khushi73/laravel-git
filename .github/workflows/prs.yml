@@ -1,6 +1,12 @@
 name: Laravel
 
 on:
+   push:
+    branches:
+       - prod
+       - develop
+       - test
+       
    pull_request:
     branches:
       - prod
