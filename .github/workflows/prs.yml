@@ -1,11 +1,13 @@
 name: Laravel
 
 on:
-   pull_request:
+
+   push:
     branches:
-      - prod
-      - develop
-      - test
+       - prod
+       - develop
+       - test
+       
 
 jobs:
   laravel-tests:
